@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "74931045391",
+    "project_id": "pruebaa-432b1",
+    "storage_bucket": "pruebaa-432b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74931045391:android:89e526ef988287081c8f7a",
+        "android_client_info": {
+          "package_name": "com.example.farmaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74931045391-f9jtegmmd152cdh25mr60827oa7sr73h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBech3AIMpk-d-4jCRZbq8mRS0jZX12I6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "74931045391-f9jtegmmd152cdh25mr60827oa7sr73h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
