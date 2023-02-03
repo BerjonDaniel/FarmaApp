@@ -1,0 +1,12 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Con sonido</item>
+        <item>Sin sonido</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>Sonido</item>
+        <item>Nosonido</item>
+    </string-array>
+</resources>

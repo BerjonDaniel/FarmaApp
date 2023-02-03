@@ -1,5 +1,6 @@
 package com.example.farmaapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -17,8 +18,15 @@ import com.example.farmaapp.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -39,6 +47,57 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         */
+    }
+
+    public void showPopup(View view) {
+        PopupMenu popup = new PopupMenu(this, view);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.popupmenu);
+        popup.show();
+        LinearLayout dim_layout = (LinearLayout) findViewById(R.id.dim_layout);
+        dim_layout.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+
+        LinearLayout dim_layout = (LinearLayout) findViewById(R.id.dim_layout);
+        dim_layout.setVisibility(View.INVISIBLE);
+
+        switch (item.getItemId()) {
+            case R.id.item1:
+                Toast.makeText(this, "Codigo de barras", Toast.LENGTH_SHORT);
+                escanear();
+                return true;
+
+            case R.id.item2:
+                Toast.makeText(this, "Codigo nacional", Toast.LENGTH_SHORT);
+                //createNoteFromCN();
+                return true;
+
+
+            case R.id.action_settings:
+                Toast.makeText(this, "setiings", Toast.LENGTH_SHORT);
+                switchMaintoSettings();
+                return true;
+            default:
+
+                return false;
+        }
+    }
+    //menu para setting
+
+
+    public void  escanear(){
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.initiateScan();
+    }
+
+    private void switchMaintoSettings() {
+
+        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+
     }
 
     @Override
