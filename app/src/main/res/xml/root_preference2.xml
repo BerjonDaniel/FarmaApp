@@ -4,21 +4,22 @@
 
     <PreferenceCategory
         android:layout_marginTop="200px"
-        app:title="Información General del Medicamento">
+        app:title="Información General de la App">
 
 
         <EditTextPreference
             app:key="Nombre"
-            app:title="Nombre"
-           />
+            app:title="FarmaApp"
+            />
 
-        <ListPreference
-            app:defaultValue="false"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="Notificaciones"
-            app:title="Sonido en las notificaciones"
-            app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
+            app:key="notifications"
+            app:title="Enable message notifications"/>
+
+        <Preference
+            app:key="feedback"
+            app:title="Send feedback"
+            app:summary="Report technical issues or suggest new features"/>
 
     </PreferenceCategory>
 

@@ -1,12 +1,16 @@
 package com.example.farmaapp;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -20,16 +24,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    private TextView tvBarCode;
+    private static final String API_URL  = "https://cima.aemps.es/cima/rest/medicamento";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         */
     }
 
+    //---------------------------Menu inicial con PopUp--------------------------------------
     public void showPopup(View view) {
         PopupMenu popup = new PopupMenu(this, view);
         popup.setOnMenuItemClickListener(this);
@@ -88,14 +105,80 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
     //menu para setting
 
-
+    //----------------OPCION 1: Escanear-----------------------------
     public void  escanear(){
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.initiateScan();
     }
 
-    private void switchMaintoSettings() {
+    //----------------Busqueda en Api------------------------------
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        //fillData();
+
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent );
+        if(result != null)
+            if (result.getContents() != null){
+                String resultindex = result.getContents().substring(6,12);
+                tvBarCode = findViewById(R.id.resultado);
+
+                APIFromCIMATask api = new APIFromCIMATask();
+                api.cn = resultindex;
+                api.execute();
+
+                tvBarCode.setText("El código de barras es:\n" + resultindex);
+            }else{
+                Toast.makeText(this, "Scanning cancelled", Toast.LENGTH_LONG).show();
+            }
+    }
+
+
+
+    private class APIFromCIMATask extends AsyncTask<String, String, String> {
+
+        String cn;
+        String response;
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        protected String doInBackground(String... urls) {
+            // We make the connection
+            try {
+                // Creamos la conexión
+                URL url = new URL(API_URL + "?cn=" + cn);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Content-Type", "application/json");
+//                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+//                conn.setDoOutput(true);
+
+                Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                response = "";
+
+                for (int c; (c = in.read()) >= 0; )
+                    response += (char) c;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                response = "ERROR: " + e.getLocalizedMessage();
+            }
+
+//            SetPrescriptionData(response);
+            Log.i("RECEIVED", response);
+
+            return response;
+        }
+    /*
+        protected void onPostExecute(String result){
+            switchMaintoBarCode(response);
+        }
+    */
+    }
+
+
+    //-----------------Si pulsamos la opcion de Settings---------------------------
+    private void switchMaintoSettings() {
         startActivity(new Intent(MainActivity.this, SettingsActivity.class));
 
     }
