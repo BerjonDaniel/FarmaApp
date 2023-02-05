@@ -169,11 +169,22 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
             return response;
         }
-    /*
-        protected void onPostExecute(String result){
-            switchMaintoBarCode(response);
+
+        protected void onPostExecute(String result){switchMaintoBarCode(response);
         }
-    */
+    }
+    private void switchMaintoBarCode(String result) {
+        // Creamos el Intent que va a lanzar la activity de editar medicamento (ApiCodeBar)
+        Intent intent = new Intent(this, GuardarMedicamento.class);
+        startActivityForResult(intent, 1);
+        // Creamos la informacion a pasar entre actividades
+        //Bundle b = new Bundle();
+        //b.putString("result", result);
+
+        // Asociamos esta informacion al intent
+        intent.putExtra("Result", result);
+        // Iniciamos la nueva actividad
+        startActivity(intent);
     }
 
 

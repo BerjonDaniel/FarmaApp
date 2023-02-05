@@ -27,6 +27,10 @@
             android:exported="false"
             android:label="activity_settings"
             />
+        <activity android:name=".GuardarMedicamento"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:label="GuardarMedicamento"/>
 
     </application>
 
