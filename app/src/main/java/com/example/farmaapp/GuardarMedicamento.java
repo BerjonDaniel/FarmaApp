@@ -1,6 +1,7 @@
 package com.example.farmaapp;
 
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.NotificationChannel;
@@ -38,7 +39,7 @@ import java.util.Locale;
 import java.util.Random;
 
 
-public class GuardarMedicamento extends AppCompatActivity   {
+public class GuardarMedicamento extends Activity {
     //implements View.OnClickListener
 
     private TextView nombre;

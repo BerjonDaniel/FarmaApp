@@ -93,11 +93,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 //createNoteFromCN();
                 return true;
 
-
-            case R.id.action_settings:
-                Toast.makeText(this, "setiings", Toast.LENGTH_SHORT);
-                switchMaintoSettings();
-                return true;
             default:
 
                 return false;
@@ -221,5 +216,13 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void showsettings(View view) {
+        PopupMenu popupsettings = new PopupMenu(this, view);
+        popupsettings.setOnMenuItemClickListener(this);
+        popupsettings.inflate(R.menu.menu_settings);
+        popupsettings.show();
+
     }
 }

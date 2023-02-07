@@ -9,7 +9,7 @@
     tools:layout_centerHorizontal="false"
     tools:showIn="@layout/activity_notepad">
 
-    <!--
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Pharminder_2_0.AppBarOverlay">
 
     </com.google.android.material.appbar.AppBarLayout>
-    -->
+
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
